@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { useEffect } from 'react';
+import useCreateBucketUrl from '../hooks/useCreateBucketUrl';
+import PostMainStats from './PostMainStats';
 import { ImMusic } from 'react-icons/im';
 import { AiFillHeart } from 'react-icons/ai';
-import PostMainStats from './PostMainStats';
 
 export default function PostMain({ post }) {
 	useEffect(() => {
@@ -24,7 +25,7 @@ export default function PostMain({ post }) {
 		<>
 			<div id={'post_main=' + post.id} className='flex border-b py-6'>
 				<div className='cursor-pointer'>
-					<img src={post?.profile?.image} width='64' className='max-h-[60px] rounded-full' />
+					<img src={useCreateBucketUrl(post?.profile?.image)} width='64' className='max-h-[64px] rounded-full' />
 				</div>
 
 				<div className='w-full px-4 pl-3'>
@@ -58,11 +59,11 @@ export default function PostMain({ post }) {
 						<div className='relative max-w-[260px] min-h-[480px] max-h-[580px] bg-black items-center rounded-xl cursor-pointer'>
 							<video
 								id={'video-' + post.id}
-								src={post?.video_url}
+								src={useCreateBucketUrl(post?.video_url)}
 								loop
 								controls
 								muted
-								className='overflow-hidden h-full border border-white object-cover rounded-xl mx-auto'
+								className='h-full overflow-hidden border border-white object-cover rounded-xl mx-auto'
 							/>
 						</div>
 

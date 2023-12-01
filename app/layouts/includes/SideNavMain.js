@@ -1,11 +1,20 @@
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { useEffect } from 'react';
+import { useGeneralStorage } from '@/app/storage/general'; 
+import { useUser } from '@/app/context/user';
 import MenuItem from './MenuItem';
 import ClientOnly from '@/app/components/ClientOnly';
 import MenuItemFollow from '@/app/components/MenuItemFollow';
 
 export default function TopNav() {
+	const { randomUsers, setRandomUsers } = useGeneralStorage();
+
+	context userContext = useUser();
+
 	const pathname = usePathname();
+
+	useEffect(() => { setRandomUsers() }, []);
 
 	return (
 		<>
@@ -41,7 +50,9 @@ export default function TopNav() {
 
 					<ClientOnly>
 						<div className='cursor-pointer'>
-							<MenuItemFollow user={{ id: '1', name: 'User', image: 'https://placehold.co/48' }} />
+							{randomUsers?.map((user, index) => (
+								<MenuItemFollow key={index} user={user} />)
+							))}
 						</div>
 					</ClientOnly>
 

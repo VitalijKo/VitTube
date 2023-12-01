@@ -1,67 +1,139 @@
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useGeneralStorage } from '../storage/general';
+import { useUser } from '../context/user';
+import useGetCommentsByPostId from '../hooks/useGetCommentsByPostId';
+import useGetLikesByPostId from '../hooks/useGetLikesByPostId';
+import useLiked from '../hooks/useLiked';
+import useCreateLike from '../hooks/useCreateLike';
+import useDeleteLike from '../hooks/useDeleteLike';
 import { AiFillHeart } from 'react-icons/ai';
+import { FaCommentDots } from 'react-icons/fa';
 import { BiLoaderCircle } from 'react-icons/bi';
-import { FaCommentDots, FaShare } from 'react-icons/fa';
 
-export default function PostMainStats({ post }) {
-	const router = useRouter();
+export default function PostMainLikes({ post }) {
+    const { setLoginOpen } = useGeneralStorage();
 
-	const [clickedLike, setClickedLike] = useState(false);
-	const [liked, setLiked] = useState(false);
-	const [likes, setLikes] = useState([]);
-	const [comments, setComments] = useState([]);
+    const router = useRouter();
 
-	const like = () => {
-		console.log('like');
-	}
+    const userContext = useUser();
 
-	return (
-		<>
-			<div id={'post_main_likes=' + post.id} className='relative mr-[75px]'>
-				<div className='absolute bottom-0 pl-2'>
-					<div className='text-center pb-4'>
-						<button
-							disabled={clickedLike}
-							onClick={() => like()}
-							className='bg-white rounded-full cursor-pointer p-2'
-						>
-							{!clickedLike ? (
-								<AiFillHeart size='24' color={likes && liked ? '#ff2626': ''} />
-							) : (
-								<BiLoaderCircle size='24' className='animate-spin' />
-							)}
-						</button>
+    const [liked, setHasClickedLike] = useState(false);
+    const [userLiked, setUserLiked] = useState(false);
+    const [comments, setComments] = useState([]);
+    const [likes, setLikes] = useState([]);
 
-						<span className='font-semibold text-xs text-white'>
-							{likes?.length}
-						</span>
-					</div>
+    useEffect(() => { 
+        getAllLikesByPost();
+        getAllCommentsByPost();
+    }, [post]);
 
-					<button
-						onClick={() => router.push('/post/' + post?.id + '/' + post?.profile?.user_id)}
-						className='text-center pb-4'
-					>
-						<div className='bg-white rounded-full cursor-pointer p-2'>
-							<FaCommentDots size='24' />
-						</div>
+    useEffect(() => { hasUserLikedPost() }, [likes, userContext]);
 
-						<span className='font-semibold text-xs text-white'>
-							{comments?.length}
-						</span>
-					</button>
+    const getAllCommentsByPost = async () => {
+        const result = await useGetCommentsByPostId(post?.id);
 
-					<button className='text-center pb-4'>
-						<div className='bg-white rounded-full cursor-pointer p-2'>
-							<FaShare size='24' />
-						</div>
+        setComments(result);
+    }
 
-						<span className='font-semibold text-xs text-white'>
-							11
-						</span>
-					</button>
-				</div>
-			</div>
-		</>
-	);
+    const getAllLikesByPost = async () => {
+        const result = await useGetLikesByPostId(post?.id);
+
+        setLikes(result);
+    }
+
+    const hasUserLikedPost = () => {
+        if (!userContext) return;
+
+        if (!likes || !userContext?.user?.id) {
+            setUserLiked(false);
+
+            return;
+        }
+
+        const r = useLiked(userContext?.user?.id, post?.id, likes);
+
+        setUserLiked(!!r);
+    }
+
+    const like = async () => {
+        setHasClickedLike(true);
+
+        await useCreateLike(userContext?.user?.id || '', post?.id);
+        await getAllLikesByPost();
+
+        hasUserLikedPost();
+
+        setHasClickedLike(false);
+    }
+
+    const unlike = async (id) => {
+        setHasClickedLike(true);
+
+        await useDeleteLike(id);
+        await getAllLikesByPost();
+
+        hasUserLikedPost();
+        setHasClickedLike(false);
+    }
+
+    const toggleLike = () => {
+        if (!userContext?.user?.id) {
+            setLoginOpen(true);
+
+            return;
+        }
+        
+        const r = useLiked(userContext?.user?.id, post?.id, likes);
+
+        if (!res) like();
+
+        else {
+            likes.forEach((like) => {
+                if (userContext?.user?.id == like?.user_id && like?.post_id == post?.id) unlike(like?.id);
+            }
+        }
+    }
+
+    return (
+        <>
+            <div className='relative mr-[75px]'>
+                <div
+                	style={{
+                		bottom: 0
+                	}}
+                	className='absolute pl-2'
+                >
+                    <div className='text-center pb-4'>
+                        <button 
+                            disabled={liked}
+                            onClick={() => toggleLike()} 
+                            className='bg-gray-200 rounded-full cursor-pointer p-2'
+                        >
+                            {!liked ? (
+                                <AiFillHeart size='24' color={likes && userLiked ? '#ff2626' : ''} />
+                            ) : (
+                                <BiLoaderCircle size='24' className='animate-spin' />
+                            )}
+                        </button>
+
+                        <span className='font-semibold text-xs text-gray-800'>
+                            {likes?.length}
+                        </span>
+                    </div>
+
+                    <button 
+                        onClick={() => router.push('/post/' + post?.id + '/' + post?.profile?.user_id)} 
+                        className='text-center pb-4'
+                    >
+                        <div className='bg-gray-200 rounded-full cursor-pointer p-2'>
+                            <FaCommentDots size='24' />
+                        </div>
+
+                        <span className='font-semibold text-xs text-gray-800'>{comments?.length}</span>
+                    </button>
+                </div>
+            </div>
+        </>
+    );
 }

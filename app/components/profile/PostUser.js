@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { useEffect } from 'react';
+import useCreateBucketUrl from '@app/hooks/useCreateBucketUrl';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { SiSoundcharts } from 'react-icons/si';
-import { BiErrorCircle } from 'react-icons/bi';
 
 export default function PostUser({ post }) {
 	useEffect(() => {
@@ -30,7 +29,7 @@ export default function PostUser({ post }) {
 					<Link href={'/post' + post.id + '/' + post.user_id}>
 						<video
 							id={'video' + post.id}
-							src={post.video_url}
+							src={useCreateBucketUrl(post.video_url)}
 							loop
 							muted
 							className='object-cover aspect-[3/4] rounded-md'
@@ -42,12 +41,6 @@ export default function PostUser({ post }) {
 					<p className='text-[16px] text-white break-words pt-1'>
 						{post.text}
 					</p>
-
-					<div className='flex font-bold text-xs text-white items-center gap-1 -ml-1'>
-						<SiSoundcharts size='16' />
-						3%
-						<BiErrorCircle size='16' />
-					</div>
 				</div>
 			</div>
 		</>
