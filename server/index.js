@@ -40,5 +40,5 @@ app.use((err, req, res, next) => {
 app.listen(5555, () => {
   connect();
 
-  console.log('Connected to Server');
+  console.log('Connected to server');
 });

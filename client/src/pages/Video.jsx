@@ -12,7 +12,6 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import Comments from '../components/Comments';
 import Recommendation from '../components/Recommendation';
-import Card from '../components/Card';
 import { subscription } from '../redux/userSlice';
 import { dislike, fetchSuccess, like } from '../redux/videoSlice';
 

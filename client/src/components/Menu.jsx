@@ -18,7 +18,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightnessOutlined';
-import Logo from '../img/logo.png';
+import LogoImage from '../img/logo.png';
 
 const Container = styled.div`
   position: sticky;
@@ -94,7 +94,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
       <Wrapper>
         <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
           <Logo>
-            <Image src={Logo} />
+            <Image src={LogoImage} />
             VitTube
           </Logo>
         </Link>

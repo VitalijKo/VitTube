@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { React, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
 import { useSelector } from 'react-redux';
+import styled, { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './utils/Theme';
 import Home from './pages/Home';
 import Video from './pages/Video';
