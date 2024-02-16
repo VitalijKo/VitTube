@@ -43,7 +43,8 @@ const Logo = styled.div`
 `;
 
 const Image = styled.img`
-  height: 25px;
+  height: 24px;
+  margin-top: -2spx;
 `;
 
 const Item = styled.div`
@@ -141,7 +142,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
             <Hr />
           </>
         }
-        <Title>BEST OF LAMATUBE</Title>
+        <Title>BEST OF VITTUBE</Title>
         <Item>
           <LibraryMusicOutlinedIcon />
           Music

@@ -29,8 +29,8 @@ const Search = styled.div`
   left: 0px;
   right: 0px;
   width: 50%;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  border: 1px solid #333;
+  border-radius: 10px;
   justify-content: space-between;
   align-items: center;
   margin: auto;

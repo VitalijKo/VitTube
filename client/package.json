@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "dev": "cross-env BROWSER=none NODE_ENV=development react-scripts --openssl-legacy-provider start",
     "start": "cross-env BROWSER=none react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",

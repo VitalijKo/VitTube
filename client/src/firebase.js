@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDuW_ZUNtTmO_wOTnDmMBhxxGXq4IXYlMo',
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: 'vittube-4d7e5.firebaseapp.com',
   projectId: 'vittube-4d7e5',
   storageBucket: 'vittube-4d7e5.appspot.com',
