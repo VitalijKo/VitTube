@@ -124,7 +124,7 @@ const Login = () => {
         />
         <Input
           type='password'
-          placeholder='password'
+          placeholder='Password'
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button onClick={handleLogin}>Login</Button>
@@ -132,13 +132,13 @@ const Login = () => {
         <Button onClick={signInWithGoogle}>Sign in with Google</Button>
         <Title>or</Title>
         <Input
-          placeholder='username'
+          placeholder='Username'
           onChange={(e) => setName(e.target.value)}
         />
         <Input placeholder='email' onChange={(e) => setEmail(e.target.value)} />
         <Input
           type='password'
-          placeholder='password'
+          placeholder='Password'
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button>Sign Up</Button>

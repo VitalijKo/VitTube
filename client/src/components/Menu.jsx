@@ -52,7 +52,7 @@ const Item = styled.div`
   align-items: center;
   cursor: pointer;
   gap: 20px;
-  padding: 7.5px 0px;
+  padding: 7.5px 5px;
 
   &:hover {
     background-color: ${({ theme }) => theme.soft};
@@ -84,6 +84,7 @@ const Title = styled.h2`
   font-size: 16px;
   font-weight: 500;
   color: #aaa;
+  margin-left: 5px;
   margin-bottom: 20px;
 `;
 

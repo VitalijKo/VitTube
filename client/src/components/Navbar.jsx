@@ -39,6 +39,7 @@ const Search = styled.div`
 `;
 
 const Input = styled.input`
+  width: 100%;
   background-color: transparent;
   border: none;
   outline: none;
@@ -62,6 +63,7 @@ const User = styled.div`
   display: flex;
   font-weight: 500;
   align-items: center;
+  cursor: pointer;
   gap: 10px;
   color: ${({ theme }) => theme.text};
 `;
@@ -90,11 +92,11 @@ const Navbar = () => {
               placeholder='Search'
               onChange={(e) => setQuery(e.target.value)}
             />
-            <SearchOutlinedIcon onClick={()=>navigate('/search?q=' + query)}/>
+            <SearchOutlinedIcon style={{ cursor: 'pointer' }} onClick={()=>navigate('/search?q=' + query)}/>
           </Search>
           {currentUser ? (
             <User>
-              <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
+              <VideoCallOutlinedIcon onClick={() => setOpen(true)}  />
               <Avatar src={currentUser.image} />
               {currentUser.name}
             </User>
